@@ -57,6 +57,9 @@ men_only_stats = data[0::,4] != "female" 	# This finds where all the men are (no
 survivor_only_stats = data[0::,1] == "1" 	# This finds where all the survivors are
 
 wom_sur_stats = survivor_only_stats & women_only_stats
+men_sur_stats = survivor_only_stats & men_only_stats
+wom_die_stats = np.invert (survivor_only_stats) & women_only_stats
+men_die_stats = np.invert (survivor_only_stats) & men_only_stats
 
 print wom_sur_stats
 # print data[, 3]
@@ -65,16 +68,20 @@ wom_sur_age = data[wom_sur_stats,5] #.astype(np.float)
 wom_sur_age[wom_sur_age==''] = '30'
 wom_sur_age = wom_sur_age.astype(np.float)
 wom_sur_fare = data[wom_sur_stats,9].astype(np.float)
-#wom_die_age = data[women_only_stats,1].astype(np.float)
-#wom_die_fare
-men_sur_age = data[men_only_stats,5] #.astype(np.float)
+
+wom_die_age = data[wom_die_stats,5] #.astype(np.float)
+wom_die_age[wom_die_age==''] = '30'
+wom_die_age = wom_die_age.astype(np.float)
+wom_die_fare = data[wom_die_stats,9].astype(np.float)
+
+men_sur_age = data[men_sur_stats,5] #.astype(np.float)
 men_sur_age[men_sur_age==''] = '30'
 men_sur_age = men_sur_age.astype(np.float)
-men_sur_fare = data[men_only_stats,9].astype(np.float)
-#men_die_age
-#men_die_fare
+men_sur_fare = data[men_sur_stats,9].astype(np.float)
 
 plt.plot (wom_sur_age, wom_sur_fare, 'mo')
+plt.plot (wom_die_age, wom_die_fare, 'mx')
+
 plt.plot (men_sur_age, men_sur_fare, 'bo')
 plt.savefig('myfigure')
 
