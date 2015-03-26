@@ -1,8 +1,12 @@
 
 import csv
+
+import matplotlib
+matplotlib.use('Agg')                       #use backend that doesn't use a window
+import matplotlib.pyplot as plt
+
 import numpy as np
 import pylab as pl
-import matplotlib
 
 data=[]                                                     # Create a variable to hold the data
 
@@ -50,8 +54,6 @@ print 'Proportion of men who survived is %s' % proportion_men_survived
 
 ##### Plotting age v fare, with notation for gender/survival ######
 
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
 
 women_only_stats = data[0::,4] == "female" 	# This finds where all the women are
 men_only_stats = data[0::,4] != "female" 	# This finds where all the men are (note != means 'not equal')
@@ -62,10 +64,10 @@ men_onboard = data[men_only_stats,1].astype(np.float)
 proportion_women_survived = np.sum(women_onboard) / np.size(women_onboard)
 proportion_men_survived = np.sum(men_onboard) / np.size(men_onboard)
 
-print data[women_only_stats,5]
+print data[women_only_stats,9]
 
-wom_sur_age = data[women_only_stats,5] #.astype(np.float)
-wom_sur_fare = data[women_only_stats,9] #.astype(np.float)
+wom_sur_age = data[women_only_stats,9].astype(np.float)
+wom_sur_fare = data[women_only_stats,9].astype(np.float)
 #wom_die_age = data[women_only_stats,1].astype(np.float)
 #wom_die_fare
 men_sur_age = data[men_only_stats,5] #.astype(np.float)
