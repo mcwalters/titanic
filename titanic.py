@@ -79,10 +79,16 @@ men_sur_age[men_sur_age==''] = '30'
 men_sur_age = men_sur_age.astype(np.float)
 men_sur_fare = data[men_sur_stats,9].astype(np.float)
 
+men_die_age = data[men_die_stats,5] #.astype(np.float)
+men_die_age[men_die_age==''] = '30'
+men_die_age = men_die_age.astype(np.float)
+men_die_fare = data[men_die_stats,9].astype(np.float)
+
 plt.plot (wom_sur_age, wom_sur_fare, 'mo')
-plt.plot (wom_die_age, wom_die_fare, 'mx')
+plt.plot (wom_die_age, wom_die_fare, 'm*')
 
 plt.plot (men_sur_age, men_sur_fare, 'bo')
+plt.plot (men_die_age, men_die_fare, 'b*')
 plt.savefig('myfigure')
 
 
