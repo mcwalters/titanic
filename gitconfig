@@ -1,3 +1,5 @@
 [user]
 	email = mcwalters@gmail.com
 	name = Brendan McWalters
+[push]
+	default = matching
