@@ -36,7 +36,7 @@ proportion_survivors = number_survived / number_passengers
 women_only_stats = data[0::,4] == "female" 	# This finds where all the women are
 men_only_stats = data[0::,4] != "female" 	# This finds where all the men are (note != means 'not equal')
 
-print men_only_stats
+#print men_only_stats
 
 # I can now filter the whole data, to find statistics for just women, by just placing
 # women_only_stats as a "mask" on my full data -- Use it in place of the '0::' part of the array index. 
@@ -66,20 +66,21 @@ proportion_men_survived = np.sum(men_onboard) / np.size(men_onboard)
 
 
 wom_sur_age = data[women_only_stats,5]
-wom_sur_age[wom_sur_age==''] = '0'
+wom_sur_age[wom_sur_age==''] = '30'
 wom_sur_age = wom_sur_age.astype(np.float)
 wom_sur_fare = data[women_only_stats,9].astype(np.float)
 #wom_die_age = data[women_only_stats,1].astype(np.float)
 #wom_die_fare
 men_sur_age = data[men_only_stats,5] #.astype(np.float)
-men_sur_age[men_sur_age==''] = '0'
+men_sur_age[men_sur_age==''] = '30'
 men_sur_age = men_sur_age.astype(np.float)
 men_sur_fare = data[men_only_stats,9].astype(np.float)
 #men_die_age
 #men_die_fare
 
-print wom_sur_age
-print wom_sur_fare
+
+#print wom_sur_age
+#print wom_sur_fare
 
 plt.plot (wom_sur_age, wom_sur_fare, 'mo')
 plt.plot (men_sur_age, men_sur_fare, 'bo')
