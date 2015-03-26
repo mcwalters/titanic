@@ -48,6 +48,36 @@ proportion_men_survived = np.sum(men_onboard) / np.size(men_onboard)
 print 'Proportion of women who survived is %s' % proportion_women_survived
 print 'Proportion of men who survived is %s' % proportion_men_survived
 
+##### Plotting age v fare, with notation for gender/survival ######
+
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+
+women_only_stats = data[0::,4] == "female" 	# This finds where all the women are
+men_only_stats = data[0::,4] != "female" 	# This finds where all the men are (note != means 'not equal')
+
+women_onboard = data[women_only_stats,1].astype(np.float)
+men_onboard = data[men_only_stats,1].astype(np.float)
+
+proportion_women_survived = np.sum(women_onboard) / np.size(women_onboard)
+proportion_men_survived = np.sum(men_onboard) / np.size(men_onboard)
+
+print data[women_only_stats,5]
+
+wom_sur_age = data[women_only_stats,5] #.astype(np.float)
+wom_sur_fare = data[women_only_stats,9] #.astype(np.float)
+#wom_die_age = data[women_only_stats,1].astype(np.float)
+#wom_die_fare
+men_sur_age = data[men_only_stats,5] #.astype(np.float)
+men_sur_fare = data[men_only_stats,9] #.astype(np.float)
+#men_die_age
+#men_die_fare
+
+plt.plot (wom_sur_age, wom_sur_fare, 'mo')
+plt.savefig('myfigure')
+
+
+######## End Plotting Section ###########
 
 # Now that I have my indicator that women were much more likely to survive,
 # I am done with the training set.
