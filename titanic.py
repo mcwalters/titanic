@@ -66,7 +66,9 @@ proportion_men_survived = np.sum(men_onboard) / np.size(men_onboard)
 
 print data[women_only_stats,9]
 
-wom_sur_age = data[women_only_stats,9].astype(np.float)
+wom_sur_age = data[women_only_stats,5]
+wom_sur_age[wom_sur_age==''] = '0'
+wom_sur_age = wom_sur_age.astype(np.float)
 wom_sur_fare = data[women_only_stats,9].astype(np.float)
 #wom_die_age = data[women_only_stats,1].astype(np.float)
 #wom_die_fare
