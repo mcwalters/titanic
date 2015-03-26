@@ -64,7 +64,6 @@ men_onboard = data[men_only_stats,1].astype(np.float)
 proportion_women_survived = np.sum(women_onboard) / np.size(women_onboard)
 proportion_men_survived = np.sum(men_onboard) / np.size(men_onboard)
 
-print data[women_only_stats,9]
 
 wom_sur_age = data[women_only_stats,5]
 wom_sur_age[wom_sur_age==''] = '0'
@@ -73,11 +72,17 @@ wom_sur_fare = data[women_only_stats,9].astype(np.float)
 #wom_die_age = data[women_only_stats,1].astype(np.float)
 #wom_die_fare
 men_sur_age = data[men_only_stats,5] #.astype(np.float)
-men_sur_fare = data[men_only_stats,9] #.astype(np.float)
+men_sur_age[men_sur_age==''] = '0'
+men_sur_age = men_sur_age.astype(np.float)
+men_sur_fare = data[men_only_stats,9].astype(np.float)
 #men_die_age
 #men_die_fare
 
+print wom_sur_age
+print wom_sur_fare
+
 plt.plot (wom_sur_age, wom_sur_fare, 'mo')
+plt.plot (men_sur_age, men_sur_fare, 'bo')
 plt.savefig('myfigure')
 
 
