@@ -1,6 +1,8 @@
 
 import csv
 import numpy as np
+import pylab as pl
+import matplotlib
 
 data=[]                                                     # Create a variable to hold the data
 
@@ -14,7 +16,8 @@ with open('train.csv', 'rb') as csvfile:
 
 data = np.array(data)                       # Then convert from a list to an array
 
-### print data[0,3]
+print header
+print data[0]
 
 # The size() function counts how many elements are in
 # in the array and sum() (as you would expects) sums up
@@ -28,6 +31,8 @@ proportion_survivors = number_survived / number_passengers
 # by making an array that lists True/False whether each row is female
 women_only_stats = data[0::,4] == "female" 	# This finds where all the women are
 men_only_stats = data[0::,4] != "female" 	# This finds where all the men are (note != means 'not equal')
+
+print men_only_stats
 
 # I can now filter the whole data, to find statistics for just women, by just placing
 # women_only_stats as a "mask" on my full data -- Use it in place of the '0::' part of the array index. 
