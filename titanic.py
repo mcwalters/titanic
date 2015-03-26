@@ -50,7 +50,9 @@ proportion_men_survived = np.sum(men_onboard) / np.size(men_onboard)
 print 'Proportion of women who survived is %s' % proportion_women_survived
 print 'Proportion of men who survived is %s' % proportion_men_survived
 
-##### Plotting age v fare, with notation for gender/survival ######
+###############################################################
+##### Plotting things, with notation for gender/survival ######
+###############################################################
 
 women_only_stats = data[0::,4] == "female" 	# This finds where all the women are
 men_only_stats = data[0::,4] != "female" 	# This finds where all the men are (note != means 'not equal')
@@ -61,8 +63,7 @@ men_sur_stats = survivor_only_stats & men_only_stats
 wom_die_stats = np.invert (survivor_only_stats) & women_only_stats
 men_die_stats = np.invert (survivor_only_stats) & men_only_stats
 
-print wom_sur_stats
-# print data[, 3]
+#print data[men_die_stats, 3]
 
 wom_sur_age = data[wom_sur_stats,5] #.astype(np.float)
 wom_sur_age[wom_sur_age==''] = '30'
@@ -85,11 +86,14 @@ men_die_age = men_die_age.astype(np.float)
 men_die_fare = data[men_die_stats,9].astype(np.float)
 
 plt.plot (wom_sur_age, wom_sur_fare, 'mo')
-plt.plot (wom_die_age, wom_die_fare, 'm*')
-
+plt.plot (wom_die_age, wom_die_fare, 'mx')
 plt.plot (men_sur_age, men_sur_fare, 'bo')
-plt.plot (men_die_age, men_die_fare, 'b*')
-plt.savefig('myfigure')
+plt.plot (men_die_age, men_die_fare, 'bx')
+plt.savefig('AgeVsFare')
+
+men_die_names = data[men_die_stats,3]
+men_die_namelen = men_die_names
+
 
 
 ######## End Plotting Section ###########
