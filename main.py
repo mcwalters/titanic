@@ -85,14 +85,14 @@ men_die_age[men_die_age==''] = '30' #normalize unknown ages to 30.
 men_die_age = men_die_age.astype(np.float)
 men_die_fare = data[men_die_stats,9].astype(np.float)
 
-plt.plot (wom_sur_age, wom_sur_fare, 'mo')
-plt.plot (wom_die_age, wom_die_fare, 'mx')
-plt.plot (men_sur_age, men_sur_fare, 'bo')
-plt.plot (men_die_age, men_die_fare, 'bx')
+wom_sur_plot = plt.plot (wom_sur_age, wom_sur_fare, 'mo')
+wom_die_plot = plt.plot (wom_die_age, wom_die_fare, 'mx')
+men_sur_plot = plt.plot (men_sur_age, men_sur_fare, 'bo')
+men_die_plot = plt.plot (men_die_age, men_die_fare, 'bx')
 plt.xlabel ('Age')
 plt.ylabel ('Fare')
 plt.title ('Age vs Fare with gender/survival notation')
-
+#plt.legend ([wom_sur_plot,wom_die_plot,men_sur_plot,men_die_plot], ('Female Surviors', 'Female Victims', 'Male Surviors', 'Male Victims'))
 plt.savefig('AgeVsFare')
 
 plt.clf()  # clear existing plot
