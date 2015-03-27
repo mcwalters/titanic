@@ -121,11 +121,11 @@ plt.title ('Age Histogram')
 plt.subplot(211)
 plt.title('Alive')
 histdata = [men_sur_age, wom_sur_age]
-plt.hist(histdata, bins=3)
+plt.hist(histdata, bins=50)
 plt.subplot(212)
 plt.title('Dead')
 histdata = [men_die_age, wom_die_age]
-plt.hist(histdata, bins=3)
+plt.hist(histdata, bins=50)
 fig1.savefig('AgeHistogram')
 
 plt.clf()  # clear existing plot
