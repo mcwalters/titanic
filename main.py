@@ -99,10 +99,10 @@ plt.clf()  # clear existing plot
 
 ## plan to plot more things here...
 
-men_sur_class = data[men_sur_stats,2]
-men_die_class = data[men_die_stats,2]
-wom_sur_class = data[wom_sur_stats,2]
-wom_die_class = data[wom_die_stats,2]
+men_sur_class = data[men_sur_stats,2].astype(np.float)
+men_die_class = data[men_die_stats,2].astype(np.float)
+wom_sur_class = data[wom_sur_stats,2].astype(np.float)
+wom_die_class = data[wom_die_stats,2].astype(np.float)
 
 histdata = [men_sur_stats, men_die_stats, wom_sur_stats, wom_die_stats]
 plt.hist(histdata)
