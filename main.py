@@ -58,30 +58,30 @@ women_only_stats = data[0::,4] == "female" 	# This finds where all the women are
 men_only_stats = data[0::,4] != "female" 	# This finds where all the men are (note != means 'not equal')
 survivor_only_stats = data[0::,1] == "1" 	# This finds where all the survivors are
 
+#Set up binary variables (gender and survival)
 wom_sur_stats = survivor_only_stats & women_only_stats
 men_sur_stats = survivor_only_stats & men_only_stats
 wom_die_stats = np.invert (survivor_only_stats) & women_only_stats
 men_die_stats = np.invert (survivor_only_stats) & men_only_stats
 
-#print data[men_die_stats, 3]
-
+## Plot Age Vs Fare with gender/survival notation
 wom_sur_age = data[wom_sur_stats,5] #.astype(np.float)
-wom_sur_age[wom_sur_age==''] = '30'
+wom_sur_age[wom_sur_age==''] = '30' #normalize unknown ages to 30.
 wom_sur_age = wom_sur_age.astype(np.float)
 wom_sur_fare = data[wom_sur_stats,9].astype(np.float)
 
 wom_die_age = data[wom_die_stats,5] #.astype(np.float)
-wom_die_age[wom_die_age==''] = '30'
+wom_die_age[wom_die_age==''] = '30' #normalize unknown ages to 30.
 wom_die_age = wom_die_age.astype(np.float)
 wom_die_fare = data[wom_die_stats,9].astype(np.float)
 
 men_sur_age = data[men_sur_stats,5] #.astype(np.float)
-men_sur_age[men_sur_age==''] = '30'
+men_sur_age[men_sur_age==''] = '30' #normalize unknown ages to 30.
 men_sur_age = men_sur_age.astype(np.float)
 men_sur_fare = data[men_sur_stats,9].astype(np.float)
 
 men_die_age = data[men_die_stats,5] #.astype(np.float)
-men_die_age[men_die_age==''] = '30'
+men_die_age[men_die_age==''] = '30' #normalize unknown ages to 30.
 men_die_age = men_die_age.astype(np.float)
 men_die_fare = data[men_die_stats,9].astype(np.float)
 
@@ -89,14 +89,33 @@ plt.plot (wom_sur_age, wom_sur_fare, 'mo')
 plt.plot (wom_die_age, wom_die_fare, 'mx')
 plt.plot (men_sur_age, men_sur_fare, 'bo')
 plt.plot (men_die_age, men_die_fare, 'bx')
+plt.xlabel ('Age')
+plt.ylabel ('Fare')
+plt.title ('Age vs Fare with gender/survival notation')
+
 plt.savefig('AgeVsFare')
 
-men_die_names = data[men_die_stats,3]
-men_die_namelen = men_die_names
+plt.clf()  # clear existing plot
+
+## plan to plot more things here...
 
 
 
+
+#########################################
 ######## End Plotting Section ###########
+#########################################
+
+
+###Build a model here...
+
+
+
+
+
+##########################################
+############ Predictions #################
+##########################################
 
 # Now that I have my indicator that women were much more likely to survive,
 # I am done with the training set.
