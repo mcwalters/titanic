@@ -57,6 +57,8 @@ for i in xrange(number_of_classes):
         survival_table[0,i,j] = np.mean(women_only_stats.astype(np.float))  # Female stats
         survival_table[1,i,j] = np.mean(men_only_stats.astype(np.float))    # Male stats
 
+print survival_table
+
 # Since in python if it tries to find the mean of an array with nothing in it
 # (such that the denominator is 0), then it returns nan, we can convert these to 0
 # by just saying where does the array not equal the array, and set these to 0.
