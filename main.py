@@ -108,7 +108,7 @@ histdata = [men_sur_class, men_die_class, wom_sur_class, wom_die_class]
 
 print histdata
 
-plt.hist(histdata)
+plt.hist(histdata, bins=3)
 plt.savefig('ClassHistogram')
 
 
