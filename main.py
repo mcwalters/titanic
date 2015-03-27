@@ -116,6 +116,11 @@ fig1.savefig('ClassHistogram')
 
 plt.clf()  # clear existing plot
 
+men_sur_age = filter(lambda a: a!=30, men_sur_age)
+wom_sur_age = filter(lambda a: a!=30, wom_sur_age)
+men_die_age = filter(lambda a: a!=30, men_die_age)
+wom_die_age = filter(lambda a: a!=30, wom_die_age)
+
 bins = np.arange(0,80,1)
 fig1 = plt.figure(1)
 plt.title ('Age Histogram')
