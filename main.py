@@ -104,10 +104,14 @@ men_die_class = data[men_die_stats,2].astype(np.float)
 wom_sur_class = data[wom_sur_stats,2].astype(np.float)
 wom_die_class = data[wom_die_stats,2].astype(np.float)
 
-histdata = [men_sur_class, men_die_class, wom_sur_class, wom_die_class]
-
-print histdata
-
+plt.figure(1)
+plt.subplot(121)
+plt.title('Alive')
+histdata = [men_sur_class, wom_sur_class]
+plt.hist(histdata, bins=3)
+plt.subplot(122)
+plt.title('Dead')
+histdata = [men_die_class, wom_die_class]
 plt.hist(histdata, bins=3)
 plt.savefig('ClassHistogram')
 
