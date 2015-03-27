@@ -116,16 +116,17 @@ fig1.savefig('ClassHistogram')
 
 plt.clf()  # clear existing plot
 
+bins = np.arange(0,80,1)
 fig1 = plt.figure(1)
 plt.title ('Age Histogram')
 plt.subplot(211)
 plt.title('Alive')
 histdata = [men_sur_age, wom_sur_age]
-plt.hist(histdata, bins=50)
+plt.hist(histdata, bins)
 plt.subplot(212)
 plt.title('Dead')
 histdata = [men_die_age, wom_die_age]
-plt.hist(histdata, bins=50)
+plt.hist(histdata, bins)
 fig1.savefig('AgeHistogram')
 
 plt.clf()  # clear existing plot
