@@ -97,8 +97,7 @@ plt.savefig('AgeVsFare')
 
 plt.clf()  # clear existing plot
 
-## plan to plot more things here...
-
+## Plot histogram of gender and class
 men_sur_class = data[men_sur_stats,2].astype(np.float)
 men_die_class = data[men_die_stats,2].astype(np.float)
 wom_sur_class = data[wom_sur_stats,2].astype(np.float)
@@ -114,6 +113,22 @@ plt.title('Dead')
 histdata = [men_die_class, wom_die_class]
 plt.hist(histdata, bins=3)
 fig1.savefig('ClassHistogram')
+
+plt.clf()  # clear existing plot
+
+fig1 = plt.figure(1)
+plt.title ('Age Histogram')
+plt.subplot(211)
+plt.title('Alive')
+histdata = [men_sur_age, wom_sur_age]
+plt.hist(histdata, bins=3)
+plt.subplot(212)
+plt.title('Dead')
+histdata = [men_die_age, wom_die_age]
+plt.hist(histdata, bins=3)
+fig1.savefig('AgeHistogram')
+
+plt.clf()  # clear existing plot
 
 
 
