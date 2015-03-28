@@ -1,6 +1,13 @@
 # -*- coding: utf-8 -*-
 # <nbformat>3.0</nbformat>
 
+# <headingcell level=2>
+
+# Using pandas and sklearn regression analysis
+
+# <rawcell>
+
+
 # <codecell>
 
 import csv
@@ -17,60 +24,27 @@ from sklearn.cross_validation import cross_val_score
 
 %matplotlib inline                                  
 
+# <headingcell level=2>
+
+# Training Data Input and Munging
+
 # <codecell>
 
 data = pd.read_csv('train.csv') # read in data
 
 # <codecell>
 
-[d for d in data.Embarked.unique() ]  #just experimenting with unique()
-[d for d in data.Sex.unique() ]       # these function calls change nothing
-
-# <codecell>
-
-embark_dict = {'S': 1, 'C': 2, 'Q': 3}
+# Translate Gender and Port of Embarkation into integers for statistical purposes
+embark_dict = {'S': 1, 'C': 2, 'Q': 3}          # Order of Embarkation: Southhamton, Cherbourg, Queenstown
 sex_dict = {'male': 0, 'female': 1}
-print embark_dict
+#print embark_dict
 
 # <codecell>
 
+#Apply maps and evaluate names by their length
 data['Embarked'] = data.Embarked.map(embark_dict)
-
-# <codecell>
-
 data['Sex'] = data.Sex.map(sex_dict)
-
-# <codecell>
-
 data['Name'] = data.Name.map(len)  # replace the name string with the length of the name
-
-# <codecell>
-
-nvs = pd.crosstab(data['Name'],data['Survived'])
-
-# <codecell>
-
-nvs.hist()
-pl.show()
-
-# <codecell>
-
-data['Pclass'].hist(bins=3)
-
-
-# <codecell>
-
-
-data[data['Survived'] != 1]['Pclass'].hist(bins=3)
-data[data['Survived'] == 1]['Pclass'].hist(bins=3)
-
-# <codecell>
-
-
-data = data.drop('Ticket',1)
-data = data.drop('Cabin',1)
-data = data.drop('Age',1)
-data = data.drop('Embarked',1)
 
 # <headingcell level=2>
 
@@ -80,9 +54,23 @@ data = data.drop('Embarked',1)
 
 import statsmodels.api as sm
 
+# Get rid of non numerical data to prepare for Regression Analysis
+data = data.drop('Ticket',1)
+data = data.drop('Cabin',1)
+
 # <codecell>
 
-data['intercept'] = 1.0
+# Pad out missing Data with copies of neighboring data
+data['Age'] = data['Age'].fillna(method='pad')
+data['Fare'] = data['Fare'].fillna(method='pad')
+data['Embarked'] = data['Embarked'].fillna(method='pad')
+data['intercept'] = 1.0   # Required for regression algorithim.
+
+# <codecell>
+
+data.describe()
+
+# <codecell>
 
 train_cols = data.columns[2:]
  
@@ -105,7 +93,7 @@ print np.exp(result.params)  # odds ratios only
 
 # <headingcell level=2>
 
-# Predictions!!!
+# Predictions from Model built above
 
 # <codecell>
 
@@ -122,44 +110,31 @@ testdata = testdata.drop('Cabin',1)
 
 # <codecell>
 
+# Pad out missing Data with copies of neighboring data
 testdata['Age'] = testdata['Age'].fillna(method='pad')
 testdata['Fare'] = testdata['Fare'].fillna(method='pad')
-
-testdata['intercept'] = 1.0
-
-# <codecell>
-
-testdata.describe()
+testdata['intercept'] = 1.0   # Required for regression algorithim.
 
 # <codecell>
 
+# Get predictions from linear regression module built above.
 testdata['Survived'] = result.predict(testdata[train_cols])
 
 # <codecell>
 
-train_cols
-
-# <codecell>
-
-testdata['Survived'] = [d for d in testdata.Survived < 0.5 ]  #just experimenting with unique()
+#Prep data for output
+testdata['Survived'] = [d for d in testdata.Survived < 0.5 ]  #Convert probabilities to boolean
 bool_map = {True: 1, False: 0}
-testdata['Survived'] = testdata.Survived.map(bool_map)
+testdata['Survived'] = testdata.Survived.map(bool_map)        #Convert boolean to 0, 1 for CSV output
 
 # <codecell>
 
-testdata = testdata.drop('Name',1)
-testdata = testdata.drop('SibSp',1)
-testdata = testdata.drop('Parch',1)
-testdata = testdata.drop('Sex',1)
-testdata = testdata.drop('Fare',1)
-testdata = testdata.drop('intercept',1)
-testdata = testdata.drop('Pclass',1)
-testdata = testdata.drop('Age',1)
-testdata = testdata.drop('Embarked',1)
+#Take slice of data which only includes ID and Survival and print to CSV for turning in.
+printdata = testdata.loc[:,['PassengerId','Survived']]
+printdata.to_csv("pandaslinear.csv",index=False)
 
 # <codecell>
 
-testdata.to_csv("linearmodel.csv", cols=['PassengerId', 'Survived'], index=False)
 
 # <codecell>
 
