@@ -1,0 +1,57 @@
+---
+title: "Titanic"
+author: "Brendan"
+date: "5/13/2015"
+output: html_document
+---
+
+Titanic from Kaggle based on tutorial by Trevor Stephens at <http://trevorstephens.com/post/72916401642/titanic-getting-started-with-r>
+
+Here's how to get CSV files into data frames in R.
+```{r}
+train <- read.csv("~/Projects/titanic/train.csv")
+test <- read.csv("~/Projects/titanic/test.csv")
+```
+
+
+Let's have a look, and do some basic descriptive functions.
+```{r}
+str(train)
+table(train$Survived)
+prop.table(table(train$Survived))
+```
+
+
+Let's try killing everyone! And then output it to CSV for submission to Kaggle.
+
+```{r}
+test$Survived <- rep(0, dim(test)[1])  # dim[1] is number of rows, rep repeats value for number of times.
+
+submit <- data.frame(PassengerId = test$PassengerId, Survived = test$Survived)
+write.csv(submit, file = "theyallperish.csv", row.names = FALSE)
+```
+
+But that's no good. So let's look at some other stuff...
+
+```{r}
+summary(train$Sex)
+
+```
+
+
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r}
+summary(cars)
+```
+
+You can also embed plots, for example:
+
+```{r, echo=FALSE}
+plot(cars)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
