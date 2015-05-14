@@ -95,14 +95,82 @@ test &lt;- read.csv(&quot;~/Projects/titanic/test.csv&quot;)</code></pre>
 ##         0         1 
 ## 0.6161616 0.3838384</code></pre>
 <p>Let’s try killing everyone! And then output it to CSV for submission to Kaggle.</p>
-<pre class="r"><code>test$Survived &lt;- rep(0,dim(test)[1])
+<pre class="r"><code>test$Survived &lt;- rep(0, dim(test)[1])  # dim[1] is number of rows, rep repeats value for number of times.
 
 submit &lt;- data.frame(PassengerId = test$PassengerId, Survived = test$Survived)
 write.csv(submit, file = &quot;theyallperish.csv&quot;, row.names = FALSE)</code></pre>
-<p>But that’s no good. So let’s look at some other stuff…</p>
+<p>But that’s no good. So let’s look at some other stuff…like gender.</p>
 <pre class="r"><code>summary(train$Sex)</code></pre>
 <pre><code>## female   male 
 ##    314    577</code></pre>
+<pre class="r"><code>prop.table(table(train$Sex, train$Survived))</code></pre>
+<pre><code>##         
+##                   0          1
+##   female 0.09090909 0.26150393
+##   male   0.52525253 0.12233446</code></pre>
+<pre class="r"><code>prop.table(table(train$Sex, train$Survived),1)  #second argument is axis to group on, in this case: 1st = rows.</code></pre>
+<pre><code>##         
+##                  0         1
+##   female 0.2579618 0.7420382
+##   male   0.8110919 0.1889081</code></pre>
+<pre class="r"><code>test$Survived &lt;- 0
+test$Survived[test$Sex == 'female'] &lt;- 1</code></pre>
+<p>Better… Now with Ages.</p>
+<pre class="r"><code>summary(train$Age)</code></pre>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+##    0.42   20.12   28.00   29.70   38.00   80.00     177</code></pre>
+<pre class="r"><code>train$Child &lt;- 0
+train$Child[train$Age &lt; 18] &lt;- 1
+aggregate(Survived ~ Child + Sex, data=train, FUN=sum)</code></pre>
+<pre><code>##   Child    Sex Survived
+## 1     0 female      195
+## 2     1 female       38
+## 3     0   male       86
+## 4     1   male       23</code></pre>
+<pre class="r"><code>aggregate(Survived ~ Child + Sex, data=train, FUN=length)</code></pre>
+<pre><code>##   Child    Sex Survived
+## 1     0 female      259
+## 2     1 female       55
+## 3     0   male      519
+## 4     1   male       58</code></pre>
+<pre class="r"><code> aggregate(Survived ~ Child + Sex, data=train, FUN=function(x) {sum(x)/length(x)})</code></pre>
+<pre><code>##   Child    Sex  Survived
+## 1     0 female 0.7528958
+## 2     1 female 0.6909091
+## 3     0   male 0.1657033
+## 4     1   male 0.3965517</code></pre>
+<p>And Money:</p>
+<pre class="r"><code>train$Fare2 &lt;- '30+'
+train$Fare2[train$Fare &lt; 30 &amp; train$Fare &gt;= 20] &lt;- '20-30'
+train$Fare2[train$Fare &lt; 20 &amp; train$Fare &gt;= 10] &lt;- '10-20'
+train$Fare2[train$Fare &lt; 10] &lt;- '&lt;10'
+aggregate(Survived ~ Fare2 + Pclass + Sex, data=train, FUN=function(x) {sum(x)/length(x)})</code></pre>
+<pre><code>##    Fare2 Pclass    Sex  Survived
+## 1  20-30      1 female 0.8333333
+## 2    30+      1 female 0.9772727
+## 3  10-20      2 female 0.9142857
+## 4  20-30      2 female 0.9000000
+## 5    30+      2 female 1.0000000
+## 6    &lt;10      3 female 0.5937500
+## 7  10-20      3 female 0.5813953
+## 8  20-30      3 female 0.3333333
+## 9    30+      3 female 0.1250000
+## 10   &lt;10      1   male 0.0000000
+## 11 20-30      1   male 0.4000000
+## 12   30+      1   male 0.3837209
+## 13   &lt;10      2   male 0.0000000
+## 14 10-20      2   male 0.1587302
+## 15 20-30      2   male 0.1600000
+## 16   30+      2   male 0.2142857
+## 17   &lt;10      3   male 0.1115385
+## 18 10-20      3   male 0.2368421
+## 19 20-30      3   male 0.1250000
+## 20   30+      3   male 0.2400000</code></pre>
+<pre class="r"><code>test$Survived &lt;- 0
+test$Survived[test$Sex == 'female'] &lt;- 1
+test$Survived[test$Sex == 'female' &amp; test$Pclass == 3 &amp; test$Fare &gt;= 20] &lt;- 0</code></pre>
+<hr />
+<hr />
 <p>This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <a href="http://rmarkdown.rstudio.com" class="uri">http://rmarkdown.rstudio.com</a>.</p>
 <p>When you click the <strong>Knit</strong> button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:</p>
 <pre class="r"><code>summary(cars)</code></pre>
