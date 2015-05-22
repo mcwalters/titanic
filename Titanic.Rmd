@@ -68,6 +68,37 @@ test$Survived[test$Sex == 'female' & test$Pclass == 3 & test$Fare >= 20] <- 0
 
 
 
+```{r}
+library('rpart')
+
+fit <- rpart(Survived ~ Pclass + Sex + Age + SibSp + Parch + Fare + Embarked, data=train, method="class")
+library("RColorBrewer", lib.loc="~/R/x86_64-pc-linux-gnu-library/3.2")
+library("rattle", lib.loc="~/R/x86_64-pc-linux-gnu-library/3.2")
+library("rpart.plot", lib.loc="~/R/x86_64-pc-linux-gnu-library/3.2")
+
+fancyRpartPlot(fit)
+
+
+```
+
+You can also embed plots, for example:
+
+
+```{r}
+Prediction <- predict(fit, test, type = "class")
+
+submit <- data.frame(PassengerId = test$PassengerId, Survived = Prediction)
+
+write.csv(submit, file = "myfirstdtree.csv", row.names = FALSE)
+```
+
+
+
+
+So, I'm liking Rstudio almost more than jupyter notebook.
+This is amazing!
+
+
 ***
 ***
 
